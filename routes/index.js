@@ -7,7 +7,13 @@ router.get('/', async (ctx, next) => {
 })
 
 router.get('/string', async (ctx, next) => {
-  ctx.body = 'koa2 string'
+  const m = require('../models')
+
+  const UserModel = m.User
+  let us = UserModel.findOne({name: 'Lee1'}, (err, result) => {
+    console.log(result)
+  })
+  ctx.body = '123'
 })
 
 router.get('/json', async (ctx, next) => {
