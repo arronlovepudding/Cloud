@@ -1,6 +1,6 @@
 <template>
   <div>
-    Hello
+    {{ str }}
   </div>
 </template>
 <style scoped>
@@ -8,7 +8,9 @@
 <script>
   export default {
     data () {
-      return {}
+      return {
+        str: 'Hello'
+      }
     },
     components: {},
     created () {
