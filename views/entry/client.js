@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import {createApp} from './main'
+
 const {app, router} = createApp()
 
 Vue.mixin({
   beforeRouteUpdate (to, from, next) {
-    const { asyncData } = this.$options
+    const {asyncData} = this.$options
     if (asyncData) {
       asyncData({
         route: to
