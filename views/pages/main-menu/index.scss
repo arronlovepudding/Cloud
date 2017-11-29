@@ -1,0 +1,10 @@
+@import "../../assets/style/base/config";
+
+.main-menu {
+  width: $container-width;
+  margin: 0 auto;
+  background-color: transparent;
+  li {
+    float: right;
+  }
+}

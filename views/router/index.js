@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../pages/home'
+import ProjectList from 'pages/project/list'
 
 Vue.use(Router)
 
@@ -9,7 +9,7 @@ export function createRouter () {
     mode: 'history',
     routes: [{
       path: '/',
-      component: Home
+      component: ProjectList
     }]
   })
 
