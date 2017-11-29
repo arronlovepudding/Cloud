@@ -6,6 +6,7 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 
 const middleware = require('./middlewares')
+const routers = require('./routers')
 
 // error handler
 onerror(app)
@@ -27,6 +28,7 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
+app.use(routers.api.routes(), routers.api.allowedMethods())
 app.use(middleware.view(app))
 
 module.exports = app
