@@ -11,13 +11,16 @@ const serverConfig = require('./webpack.server.config')
 const readFile = (fs, file) => {
   try {
     return fs.readFileSync(path.join(clientConfig.output.path, file), 'utf-8')
-  } catch (e) {}
+  } catch (e) {
+  }
 }
 
 module.exports = function setupDevServer (app, cb) {
   let bundle, clientManifest
   let resolve
-  const readyPromise = new Promise(r => { resolve = r }) // eslint-disable-line
+  const readyPromise = new Promise(r => {
+    resolve = r
+  }) // eslint-disable-line
   const ready = (...args) => {
     resolve()
     cb(...args) // eslint-disable-line
@@ -53,7 +56,11 @@ module.exports = function setupDevServer (app, cb) {
     }
   })
 
-  app.use(middleware.hot(clientCompiler), { heartbeat: 5000 })
+  app.use(middleware.hot(clientCompiler), {
+    log: () => {
+    },
+    heartbeat: 2000
+  })
   const serverCompiler = webpack(serverConfig)
   const mfs = new MFS()
   serverCompiler.outputFileSystem = mfs
