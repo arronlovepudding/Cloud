@@ -4,9 +4,8 @@ const config = require('config')
 
 mongoose.Promise = global.Promise
 mongoose.connect(config.get('db'), {
-  server: {
-    poolSize: 20
-  }
+  useMongoClient: true,
+  poolSize: 20
 }, (err) => {
   if (err) {
     console.error('connect to %s error: ', config.get('db'), err.message)
@@ -15,3 +14,4 @@ mongoose.connect(config.get('db'), {
 })
 
 exports.User = require('./user')
+exports.Project = require('./project')
