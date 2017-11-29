@@ -12,6 +12,7 @@
     "build:server": "webpack --config build/webpack.server.config.js --progress --hide-modules"
   },
   "dependencies": {
+    "axios": "^0.17.1",
     "config": "^1.26.2",
     "cross-env": "^5.0.5",
     "debug": "^2.6.3",
