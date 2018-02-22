@@ -15,3 +15,4 @@ mongoose.connect(config.get('db'), {
 
 exports.User = require('./user')
 exports.Project = require('./project')
+exports.ProjectDetail = require('./project/detail')
