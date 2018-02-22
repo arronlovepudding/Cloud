@@ -1,5 +1,4 @@
 <template>
-  <div>123</div>
 </template>
 <script>
   import Cookies from 'universal-cookie'
@@ -23,7 +22,9 @@
       logOut () {
         const cookies = new Cookies()
         cookies.remove(`${config.storageNamespace}token`)
-        this.$router.push('/login')
+        this.$nextTick(() => {
+          this.$router.push('/login')
+        })
       }
     },
     computed: {},
