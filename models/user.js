@@ -15,6 +15,6 @@ const schema = new Schema({
   }
 })
 
-schema.index({ name: 1 }, { unique: true })
+schema.index({name: 1, password: 1}, {unique: true})
 
 module.exports = mongoose.model('User', schema)
