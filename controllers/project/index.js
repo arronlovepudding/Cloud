@@ -13,13 +13,14 @@ exports.list = async function (ctx, next) {
 
 exports.detail = async function (ctx, next) {
   let projectId = ctx.params.projectId
+  let baseUrl = `${ctx.protocol}://${ctx.host}`
   let result = await ProjectDetail.find({projectId}).sort({create_at: -1})
   ctx.body = result.map(item => {
     return {
       id: item._id,
       name: item.name,
       path: item.path,
-      address: `/cloud/${item.projectId}/${item.path}`,
+      address: `${baseUrl}/cloud/${item.projectId}/${item.path}`,
       pvCount: item.pvCount,
       create_at: item.create_at_date
     }
