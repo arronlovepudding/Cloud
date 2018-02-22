@@ -29,6 +29,7 @@ app.use(async (ctx, next) => {
 })
 
 app.use(routers.api.routes(), routers.api.allowedMethods())
+app.use(routers.cloud.routes(), routers.cloud.allowedMethods())
 app.use(middleware.view(app))
 
 module.exports = app

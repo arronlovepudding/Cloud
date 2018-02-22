@@ -36,3 +36,11 @@ exports.create = async function (ctx, next) {
   await instance.save()
   ctx.status = 204
 }
+
+exports.content = async function (ctx, next) {
+  let projectId = ctx.params.projectId
+  let path = ctx.params.path
+  let result = await ProjectDetail.findOne({projectId, path}) || {}
+  console.log(result)
+  ctx.body = result.content
+}
