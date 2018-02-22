@@ -30,6 +30,7 @@
     },
     methods: {
       handleSelect () {
+        this.$router.push('/')
       }
     },
     computed: {},
