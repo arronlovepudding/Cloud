@@ -13,11 +13,20 @@ export function createRouter () {
       path: '/',
       component: ProjectList
     }, {
-      path: '/project/detail/:id',
+      path: '/project/:projectId/detail',
       component: ProjectDetail
     }, {
-      path: '/project/create/:id',
-      component: ProjectDetailCreate
+      path: '/project/:projectId/create',
+      component: ProjectDetailCreate,
+      meta: {
+        CRUD: 'create'
+      }
+    }, {
+      path: '/project/:projectId/update/:id',
+      component: ProjectDetailCreate,
+      meta: {
+        CRUD: 'update'
+      }
     }]
   })
 

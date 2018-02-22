@@ -1,6 +1,6 @@
 <template>
   <el-row :gutter="20">
-    <el-col class="card-item" :span="6" v-for="item in list">
+    <el-col class="card-item" :span="6" v-for="(item,index) in list" :key="index">
       <div class="project" @click="showDetail(item.id)">
         <div class="name">
           {{item.name}}
@@ -36,7 +36,7 @@
         })
       },
       showDetail (id) {
-        this.$router.push(`/project/detail/${id}`)
+        this.$router.push(`/project/${id}/detail`)
       }
     },
     computed: {},
