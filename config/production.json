@@ -1,5 +1,8 @@
 {
   "db": "mongodb://localhost:27017/ApiAgg",
+  "cloud": {
+    "baseUrl": "http://cloud.fe.i200.cn/cloud"
+  },
   "fe": {
     "publicPath": "/dist/"
   }
