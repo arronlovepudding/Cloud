@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Login from 'pages/login/index/index'
 import ProjectList from 'pages/project/list'
 import ProjectDetail from 'pages/project/detail'
 import ProjectDetailCreate from 'pages/project/create'
@@ -12,6 +13,9 @@ export function createRouter () {
     routes: [{
       path: '/',
       component: ProjectList
+    }, {
+      path: '/login',
+      component: Login
     }, {
       path: '/project/:projectId/detail',
       component: ProjectDetail
