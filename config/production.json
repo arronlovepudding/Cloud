@@ -3,7 +3,12 @@
   "cloud": {
     "baseUrl": "http://cloud.fe.i200.cn/cloud"
   },
+  "jwt": {
+    "expire": "7 days",
+    "secret": "some-secret"
+  },
   "fe": {
-    "publicPath": "/dist/"
+    "publicPath": "/dist/",
+    "storageNamespace": "cloud_"
   }
 }

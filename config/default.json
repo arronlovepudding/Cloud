@@ -3,7 +3,12 @@
   "cloud": {
     "baseUrl": "http://localhost:3001/cloud"
   },
+  "jwt": {
+    "expire": "7 days",
+    "secret": "some-secret"
+  },
   "fe": {
-    "publicPath": "/dist/"
+    "publicPath": "/dist/",
+    "storageNamespace": "cloud_"
   }
 }
