@@ -1,3 +1,17 @@
+.card-item:nth-child(n+5) {
+  margin-top: 20px;
+}
+
 .project {
-  height: 200px;
+  height: 100px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+  .name {
+  }
 }

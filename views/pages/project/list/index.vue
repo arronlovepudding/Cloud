@@ -1,8 +1,10 @@
 <template>
-  <el-row>
-    <el-col :span="4">
-      <div class="project" @click="showDetail(item.id)" v-for="item in list">
-        {{item.name}}
+  <el-row :gutter="20">
+    <el-col class="card-item" :span="6" v-for="item in list">
+      <div class="project" @click="showDetail(item.id)">
+        <div class="name">
+          {{item.name}}
+        </div>
       </div>
     </el-col>
   </el-row>
