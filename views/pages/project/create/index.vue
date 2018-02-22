@@ -6,7 +6,8 @@
           <el-input v-model="form.name" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="路径">
-          <el-input v-model="form.path" placeholder="请输入"></el-input>
+          <el-input v-model="form.path" placeholder="请输入"
+                    :disabled="formAttrDisabled"></el-input>
         </el-form-item>
         <el-form-item label="内容">
           <el-input
@@ -17,8 +18,8 @@
           </el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">立即创建</el-button>
-          <el-button type="default" @click="goBack">取消</el-button>
+          <el-button @click="goBack">取消</el-button>
+          <el-button type="primary" @click="onSubmit">{{buttonName}}</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -37,31 +38,53 @@
           name: '',
           path: '',
           content: ''
-        }
+        },
+        formAttrDisabled: false,
+        buttonName: '立即创建',
+        isUpdate: false
       }
     },
     components: {},
     created () {
     },
     mounted () {
+      this.init()
     },
     beforeDestroy () {
     },
     methods: {
+      init () {
+        let crud = this.$route.meta.CRUD
+        if (crud !== 'update') return
+        this.isUpdate = true
+        this.formAttrDisabled = true
+        this.buttonName = '立即更新'
+        let projectId = this.$route.params.projectId
+        let id = this.$route.params.id
+        Api.get(`/api/project/${projectId}/${id}`).then(res => {
+          let data = res.data || {}
+          this.form.id = data._id
+          this.form.name = data.name
+          this.form.path = data.path
+          this.form.content = JSON.stringify(data.content)
+        })
+      },
       onSubmit () {
-        let projectId = this.$route.params.id
+        let projectId = this.$route.params.projectId
         let data = {
           projectId,
           ...this.form
         }
         if (data.content) data.content = JSON.parse(data.content)
-        Api.post(`/api/project/create`, data).then(res => {
-          this.createSuccess()
-        })
-      },
-      createSuccess () {
-        let projectId = this.$route.params.id
-        this.$router.replace(`/project/detail/${projectId}`)
+        if (this.isUpdate) {
+          Api.put(`/api/project/${projectId}/${this.form.id}`, data).then(res => {
+            this.goBack()
+          })
+        } else {
+          Api.post(`/api/project/${projectId}`, data).then(res => {
+            this.goBack()
+          })
+        }
       },
       goBack () {
         this.$router.back()
