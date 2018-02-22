@@ -1,6 +1,6 @@
 ApiAggregation
 ------
-实现Api聚合，完成Api合并和数据打包
+自定义云配置化Api，实现更灵活的数据驱动
 
 TODO
 ------
