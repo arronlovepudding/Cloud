@@ -27,7 +27,8 @@ module.exports = {
     alias: {
       'pages': resolve('../views/pages'),
       'components': resolve('../views/components'),
-      'config': resolve('../views/config.json')
+      'config': resolve('../views/config.json'),
+      'src': resolve('../views')
     }
   },
   module: {
@@ -69,7 +70,7 @@ module.exports = {
           })
           : [
             'vue-style-loader',
-            { loader: 'css-loader', options: { importLoaders: 1 } },
+            {loader: 'css-loader', options: {importLoaders: 1}},
             'postcss-loader'
           ]
       },
@@ -86,7 +87,7 @@ module.exports = {
   plugins: isProd
     ? [
       new webpack.optimize.UglifyJsPlugin({
-        compress: { warnings: false }
+        compress: {warnings: false}
       }),
       new ExtractTextPlugin({
         filename: 'common.[chunkhash].css'
