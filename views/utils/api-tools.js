@@ -10,7 +10,12 @@ function post (url, data = null, config = null) {
   return axios.post(url, data, config)
 }
 
+function put (url, data = null, config = null) {
+  return axios.put(url, data, config)
+}
+
 export default {
   get,
-  post
+  post,
+  put
 }
