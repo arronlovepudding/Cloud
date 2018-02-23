@@ -12,7 +12,7 @@
         <el-form-item label="内容">
           <el-input
                   type="textarea"
-                  :autosize="{ minRows: 2, maxRows: 4}"
+                  :autosize="{ minRows: 6, maxRows: 15}"
                   placeholder="请输入内容"
                   v-model="form.content">
           </el-input>
