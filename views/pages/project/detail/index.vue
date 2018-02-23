@@ -16,8 +16,11 @@
               label="路径">
       </el-table-column>
       <el-table-column
-              prop="pvCount"
               label="请求数量">
+        <template slot-scope="scope">
+          <span>{{scope.row.pvCount}}</span>
+          <p class="pv-datetime">{{scope.row.pvDatetime}}</p>
+        </template>
       </el-table-column>
       <el-table-column
               label="地址">

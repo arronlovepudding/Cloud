@@ -12,6 +12,9 @@ const schema = new Schema({
     type: Number,
     default: 0
   },
+  recentVisit: {
+    type: Date,
+  },
   create_at: {
     type: Date,
     default: Date.now
@@ -21,8 +24,12 @@ const schema = new Schema({
 schema.index({projectId: 1, path: 1})
 schema.index({create_at: 1})
 
-schema.virtual('create_at_date').get(() => {
+schema.virtual('create_at_date').get(function () {
   return DateTools.dateStr(this.create_at)
+})
+
+schema.virtual('pv_datetime').get(function () {
+  return this.recentVisit ? DateTools.datetimeStr(this.recentVisit) : ''
 })
 
 module.exports = mongoose.model('ProjectDetail', schema)

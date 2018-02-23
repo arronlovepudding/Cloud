@@ -23,6 +23,7 @@ exports.detail = async function (ctx, next) {
       path: item.path,
       address: `${baseUrl}/${item.projectId}/${item.path}`,
       pvCount: item.pvCount,
+      pvDatetime: item.pv_datetime,
       create_at: item.create_at_date
     }
   })
@@ -68,6 +69,9 @@ exports.content = async function (ctx, next) {
   }, {
     $inc: {
       pvCount: 1
+    },
+    $set: {
+      recentVisit: Date.now()
     }
   })
   ctx.body = result.content
