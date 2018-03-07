@@ -10,12 +10,7 @@
                     :disabled="formAttrDisabled"></el-input>
         </el-form-item>
         <el-form-item label="内容">
-          <el-input
-                  type="textarea"
-                  :autosize="{ minRows: 6, maxRows: 15}"
-                  placeholder="请输入内容"
-                  v-model="form.content">
-          </el-input>
+          <div ref="codeEdit" style="width:100%;height:500px;"></div>
         </el-form-item>
         <el-form-item>
           <el-button @click="goBack">取消</el-button>
@@ -47,13 +42,26 @@
     components: {},
     created () {
     },
-    mounted () {
-      this.init()
+    async mounted () {
+      await this.init()
+      window.require.config({paths: {'vs': '/javascripts/monaco/vs'}})
+      window.require(['vs/editor/editor.main'], () => {
+        this.editor = window.monaco.editor.create(this.$refs.codeEdit, {
+          value: '',
+          language: 'json'
+        })
+        this.editor.setValue(this.form.content)
+        this.editor.onDidChangeModelContent(event => {
+          const value = this.editor.getValue()
+          this.form.content = value
+        })
+      })
     },
     beforeDestroy () {
+      this.editor && this.editor.dispose()
     },
     methods: {
-      init () {
+      async init () {
         let crud = this.$route.meta.CRUD
         if (crud !== 'update') return
         this.isUpdate = true
@@ -61,13 +69,12 @@
         this.buttonName = '立即更新'
         let projectId = this.$route.params.projectId
         let id = this.$route.params.id
-        Api.get(`/api/project/${projectId}/${id}`).then(res => {
-          let data = res.data || {}
-          this.form.id = data._id
-          this.form.name = data.name
-          this.form.path = data.path
-          this.form.content = JSON.stringify(data.content)
-        })
+        let res = await Api.get(`/api/project/${projectId}/${id}`)
+        let data = res.data || {}
+        this.form.id = data._id
+        this.form.name = data.name
+        this.form.path = data.path
+        this.form.content = JSON.stringify(data.content)
       },
       onSubmit () {
         let projectId = this.$route.params.projectId
