@@ -5,5 +5,5 @@ exports.dateStr = function (date) {
 }
 
 exports.datetimeStr = function (date) {
-  return Moment(date).format('YYYY-MM-DD hh:mm:ss')
+  return Moment(date).format('YYYY-MM-DD HH:mm:ss')
 }
