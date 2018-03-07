@@ -1,9 +1,9 @@
 const Moment = require('moment')
 
 exports.dateStr = function (date) {
-  return Moment(date).format('YYYY-MM-DD')
+  return Moment(date).format('YYYY/MM/DD')
 }
 
 exports.datetimeStr = function (date) {
-  return Moment(date).format('YYYY-MM-DD HH:mm:ss')
+  return Moment(date).format('YYYY/MM/DD HH:mm:ss')
 }
