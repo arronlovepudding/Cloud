@@ -7,6 +7,7 @@ const logger = require('koa-logger')
 const config = require('config')
 const middleware = require('./middlewares')
 const routers = require('./routers')
+const cors = require('koa2-cors')
 
 const koaJWT = require('koa-jwt')
 const jwtSecret = config.get('jwt.secret')
@@ -15,6 +16,7 @@ const jwtSecret = config.get('jwt.secret')
 onerror(app)
 
 // middlewares
+app.use(cors())
 app.use(bodyparser({
   enableTypes: ['json', 'form', 'text']
 }))
