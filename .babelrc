@@ -4,7 +4,8 @@
     "stage-0"
   ],
   "plugins": [
-    "syntax-dynamic-import"
+    "syntax-dynamic-import",
+    "transform-runtime"
   ],
   "comments": false
 }
