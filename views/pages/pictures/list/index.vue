@@ -1,6 +1,7 @@
 <template>
   <div>
-    <input type="file" @change="handleChange">
+    <el-button type="primary" size="small" @click="uploadClick" :loading="uploading">上传</el-button>
+    <input ref="fileUpload" style="display: none" type="file" @change="handleChange" accept=".jpg, .jpeg, .png, .gif">
     <el-table class="mt-15"
               :data="list">
       <el-table-column
@@ -39,6 +40,16 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog
+            title="上传中"
+            :visible="uploading"
+            width="30%"
+            :close-on-click-modal="false"
+            :close-on-press-escape="false"
+            :show-close="false">
+      <div>{{fileName}}</div>
+      <el-progress :percentage="percent"></el-progress>
+    </el-dialog>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -53,7 +64,10 @@
     data () {
       return {
         bucketId: null,
-        list: []
+        list: [],
+        fileName: '',
+        percent: 0,
+        uploading: false
       }
     },
     components: {},
@@ -74,10 +88,14 @@
         let res = await Api.get(`/api/picture/${this.bucketId}`)
         this.list = res.data || []
       },
+      uploadClick () {
+        this.$refs.fileUpload.click()
+      },
       async handleChange (event) {
         const files = event.target.files
         if (!files) return
         let file = files[0]
+        this.fileName = file.name
         let res = await Api.get(`/api/picture/${this.bucketId}/token`)
         let token = res.data
         let pictureObj = {
@@ -85,12 +103,20 @@
           size: file.size,
           expand: file.type
         }
+        this.uploading = true
+        this.percent = 0
         let observable = qiniu.upload(file, null, token)
         observable.subscribe(next => {
           console.log(next)
+          let percent = next.total.percent
+          this.percent = Number(Number(percent).toFixed(0))
         }, error => {
+          this.$message.error('上传失败')
+          this.delayCloseUploading()
           console.log(error)
         }, complete => {
+          this.$message.success('上传成功')
+          this.delayCloseUploading()
           pictureObj.resUrl = complete.key
           pictureObj.hash = complete.hash
           Api.post(`/api/picture/${this.bucketId}`, pictureObj).then(res => {
@@ -102,6 +128,11 @@
             this.list.unshift(data)
           })
         })
+      },
+      delayCloseUploading () {
+        setTimeout(() => {
+          this.uploading = false
+        }, 1350)
       }
     },
     computed: {},
