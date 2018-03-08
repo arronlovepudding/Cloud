@@ -7,12 +7,13 @@
       <el-menu-item index="2-1">退出</el-menu-item>
     </el-submenu>
     <el-submenu index="3">
-      <template slot="title">图床</template>
-      <el-menu-item index="3-1">Bucket</el-menu-item>
+      <template slot="title">图库</template>
+      <el-menu-item index="3-1">浏览</el-menu-item>
+      <el-menu-item index="3-2">新建</el-menu-item>
     </el-submenu>
     <el-submenu index="1">
-      <template slot="title">项目管理</template>
-      <el-menu-item index="1-1">项目列表</el-menu-item>
+      <template slot="title">API</template>
+      <el-menu-item index="1-1">浏览</el-menu-item>
     </el-submenu>
   </el-menu>
 </template>
@@ -41,7 +42,8 @@
         let path = {
           '1-1': '/',
           '2-1': '/login/out',
-          '3-1': '/picture'
+          '3-1': '/picture',
+          '3-2': '/picture/bucket/create'
         }[key]
         this.$router.push(path)
       }
