@@ -3,7 +3,10 @@
     <el-col class="card-item" :span="6" v-for="(item,index) in list" :key="index">
       <div class="project" @click="showDetail(item.id)">
         <div class="name">
-          {{item.name}}({{item.path}})
+          {{item.name}}
+        </div>
+        <div class="path">
+          <span class="text-gray">仓库路径：{{item.path}}</span>
         </div>
       </div>
     </el-col>
