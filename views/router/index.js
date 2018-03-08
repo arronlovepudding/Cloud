@@ -6,6 +6,9 @@ import ProjectList from 'pages/project/list'
 import ProjectDetail from 'pages/project/detail'
 import ProjectDetailCreate from 'pages/project/create'
 
+import PictureBucket from 'pages/pictures/bucket'
+import PictureList from 'pages/pictures/list'
+
 Vue.use(Router)
 
 export function createRouter () {
@@ -35,6 +38,12 @@ export function createRouter () {
       meta: {
         CRUD: 'update'
       }
+    }, {
+      path: '/picture',
+      component: PictureBucket
+    }, {
+      path: '/picture/:bucketId',
+      component: PictureList
     }]
   })
 
