@@ -47,3 +47,19 @@ exports.create = async function (ctx) {
   let res = await picture.save()
   ctx.body = res.apiData
 }
+
+exports.bucketCreate = async function (ctx) {
+  let params = ctx.request.body || {}
+  let haveBucket = await PictureBucket.findOne({path: params.path})
+  if (haveBucket) {
+    ctx.body = {
+      message: '此路径已存在'
+    }
+    return
+  }
+  let pictureBucket = new PictureBucket()
+  pictureBucket.name = params.name
+  pictureBucket.path = params.path
+  await pictureBucket.save()
+  ctx.status = 204
+}

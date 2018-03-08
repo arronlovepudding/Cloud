@@ -13,6 +13,8 @@ exports.api = router({prefix: '/api'})
   .get('/picture/:bucketId', Picture.detail)
   .get('/picture/:bucketId/token', Picture.token)
   .post('/picture/:bucketId', Picture.create)
+  .post('/picture/bucket/create', Picture.bucketCreate)
+
 
 exports.cloud = router({prefix: '/cloud'})
   .get('/:projectId/:path*', Project.content)
