@@ -7,6 +7,7 @@ import ProjectDetail from 'pages/project/detail'
 import ProjectDetailCreate from 'pages/project/create'
 
 import PictureBucket from 'pages/pictures/bucket'
+import PictureBucketMaintain from 'pages/pictures/bucket/create'
 import PictureList from 'pages/pictures/list'
 
 Vue.use(Router)
@@ -41,6 +42,9 @@ export function createRouter () {
     }, {
       path: '/picture',
       component: PictureBucket
+    }, {
+      path: '/picture/bucket/create',
+      component: PictureBucketMaintain
     }, {
       path: '/picture/:bucketId',
       component: PictureList
