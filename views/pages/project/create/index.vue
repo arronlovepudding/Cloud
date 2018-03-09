@@ -6,7 +6,7 @@
           <el-input v-model="form.name" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="路径">
-          <el-input v-model="form.path" placeholder="请输入"
+          <el-input v-model="form.path" placeholder="格式: path1/path2/path3"
                     :disabled="formAttrDisabled"></el-input>
         </el-form-item>
         <el-form-item label="内容">
@@ -77,12 +77,19 @@
         this.form.content = JSON.stringify(data.content)
       },
       onSubmit () {
+        if (this.form.path === '' || this.form.name === '') return this.$message.warning('名称与路径不可空')
+        if (/^([0-9a-zA-z]+\/?)+[^/]$/.test(this.form.path) === false) return this.$message.warning('路径错误，标准格式: path1/path2/path3')
         let projectId = this.$route.params.projectId
         let data = {
           projectId,
           ...this.form
         }
-        if (data.content) data.content = JSON.parse(data.content)
+        try {
+          if (data.content) data.content = JSON.parse(data.content)
+        } catch (e) {
+          this.$message.warning('JSON格式错误')
+          return
+        }
         if (this.isUpdate) {
           Api.put(`/api/project/${projectId}/${this.form.id}`, data).then(res => {
             this.goBack()
