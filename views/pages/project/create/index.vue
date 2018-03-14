@@ -44,19 +44,22 @@
     },
     async mounted () {
       await this.init()
-      let editor = window.ace.edit(this.$refs.codeEdit)
-      editor.$blockScrolling = Infinity
-      editor.session.setMode('ace/mode/json')
-      editor.setTheme('ace/theme/monokai')
-      editor.setValue(this.form.content)
-      editor.getSession().on('change', () => {
-        this.form.content = editor.getValue()
-      })
+      this.initEditor()
     },
     beforeDestroy () {
       this.editor && this.editor.dispose()
     },
     methods: {
+      initEditor () {
+        let editor = window.ace.edit(this.$refs.codeEdit)
+        editor.$blockScrolling = Infinity
+        editor.session.setMode('ace/mode/json')
+        editor.setTheme('ace/theme/monokai')
+        editor.setValue(this.form.content)
+        editor.getSession().on('change', () => {
+          this.form.content = editor.getValue()
+        })
+      },
       async init () {
         let crud = this.$route.meta.CRUD
         if (crud !== 'update') return
