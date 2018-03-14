@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <el-col :span="12">
+    <el-col :span="24">
       <el-form ref="form" v-model="form" label-width="80px">
         <el-form-item label="名称">
           <el-input v-model="form.name" placeholder="请输入"></el-input>
@@ -44,17 +44,13 @@
     },
     async mounted () {
       await this.init()
-      window.require.config({paths: {'vs': '/javascripts/monaco/vs'}})
-      window.require(['vs/editor/editor.main'], () => {
-        this.editor = window.monaco.editor.create(this.$refs.codeEdit, {
-          value: '',
-          language: 'json'
-        })
-        this.editor.setValue(this.form.content)
-        this.editor.onDidChangeModelContent(event => {
-          const value = this.editor.getValue()
-          this.form.content = value
-        })
+      let editor = window.ace.edit(this.$refs.codeEdit)
+      editor.$blockScrolling = Infinity
+      editor.session.setMode('ace/mode/json')
+      editor.setTheme('ace/theme/monokai')
+      editor.setValue(this.form.content)
+      editor.getSession().on('change', () => {
+        this.form.content = editor.getValue()
       })
     },
     beforeDestroy () {
@@ -74,7 +70,7 @@
         this.form.id = data._id
         this.form.name = data.name
         this.form.path = data.path
-        this.form.content = JSON.stringify(data.content)
+        this.form.content = JSON.stringify(data.content, null, 4)
       },
       onSubmit () {
         if (this.form.path === '' || this.form.name === '') return this.$message.warning('名称与路径不可空')
