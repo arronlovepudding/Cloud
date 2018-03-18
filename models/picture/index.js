@@ -24,7 +24,7 @@ schema.virtual('absUrl').get(function () {
 })
 
 schema.virtual('thumUrl').get(function () {
-  return `http://static.i200.cn/${this.resUrl}!w100`
+  return `http://static.i200.cn/${this.resUrl}!cloudthum`
 })
 
 schema.virtual('createTime').get(function () {
