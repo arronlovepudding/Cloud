@@ -2,44 +2,27 @@
   <div>
     <el-button type="primary" size="small" @click="uploadClick" :loading="uploading">上传</el-button>
     <input ref="fileUpload" style="display: none" type="file" @change="handleChange" accept=".jpg, .jpeg, .png, .gif">
-    <el-table class="mt-15"
-              :data="list">
-      <el-table-column
-              type="index"
-              width="50">
-      </el-table-column>
-      <el-table-column
-              label="缩略"
-              width="120">
-        <template slot-scope="scope">
-          <a :href="scope.row.absUrl" target="_blank">
-            <img :src="scope.row.thumUrl" alt="">
-          </a>
-        </template>
-      </el-table-column>
-      <el-table-column
-              prop="name"
-              label="名称">
-      </el-table-column>
-      <el-table-column
-              prop="expand"
-              label="类型">
-      </el-table-column>
-      <el-table-column
-              prop="createTime"
-              label="时间"
-              width="180">
-      </el-table-column>
-      <el-table-column
-              label="路径"
-              width="100">
-        <template slot-scope="scope">
-          <el-button class="clip-btn" type="text"
-                     :data-clipboard-text="scope.row.absUrl">复制
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    <el-row :gutter="20" class="mt-20">
+      <el-col :span="6" class="col-item"
+              v-for="(item,index) in list" :key="index">
+        <el-card :body-style="{ padding: '0px' }">
+          <div class="img-thum">
+            <a :href="item.absUrl" target="_blank">
+              <img :src="item.thumUrl">
+            </a>
+          </div>
+          <div class="card-item-info">
+            <span class="text-elps" :title="item.name">{{item.name}}</span>
+            <div class="options">
+              <time class="time">{{item.createTime}}</time>
+              <el-button class="clip-btn" type="text"
+                         :data-clipboard-text="item.absUrl">复制
+              </el-button>
+            </div>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
     <el-dialog
             title="上传中"
             :visible="uploading"

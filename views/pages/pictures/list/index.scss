@@ -1,0 +1,32 @@
+.img-thum {
+  text-align: center;
+  img {
+    height: 150px;
+  }
+}
+
+.col-item:nth-child(n+5) {
+  margin-top: 20px;
+}
+
+.card-item-info {
+  padding: 14px;
+  height: 86px;
+  .options {
+    margin-top: 13px;
+    line-height: 12px;
+    &:before {
+      display: table;
+      content: "";
+    }
+    &:after {
+      display: table;
+      content: "";
+      clear: both;
+    }
+    .clip-btn {
+      padding: 0;
+      float: right;
+    }
+  }
+}
