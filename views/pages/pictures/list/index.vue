@@ -8,7 +8,7 @@
         <el-card :body-style="{ padding: '0px' }">
           <div class="img-thum">
             <a :href="item.absUrl" target="_blank">
-              <img :src="item.thumUrl">
+              <img v-lazy="item.thumUrl">
             </a>
           </div>
           <div class="card-item-info">
