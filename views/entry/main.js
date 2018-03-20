@@ -7,7 +7,9 @@ import {createRouter} from '../router'
 import ApiTools from '../utils/api-tools'
 import VueLazyload from 'vue-lazyload'
 
-Vue.use(VueLazyload)
+Vue.use(VueLazyload, {
+  loading: '/images/img-placeholder.png'
+})
 Vue.use(ElementUI)
 
 export function createApp () {
