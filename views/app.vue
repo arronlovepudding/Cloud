@@ -1,14 +1,16 @@
 <template>
-  <div id="app">
-    <el-header class="header">
-      <main-menu></main-menu>
-    </el-header>
-    <el-container class="container">
-      <el-main>
-        <transition name="fade" mode="out-in">
-          <router-view></router-view>
-        </transition>
-      </el-main>
+  <div id="app" class="main-view">
+    <el-container>
+      <el-aside width="256px">
+        <main-menu></main-menu>
+      </el-aside>
+      <el-container>
+        <el-main class="main-container">
+          <transition name="fade" mode="out-in">
+            <router-view></router-view>
+          </transition>
+        </el-main>
+      </el-container>
     </el-container>
   </div>
 </template>

@@ -1,14 +1,28 @@
 @import "../../assets/style/base/config";
 
 .main-menu {
-  width: $container-width;
-  margin: 0 auto;
-  background-color: transparent;
-  .logo-area {
-    font-size: 20px;
-    line-height: 60px;
+  height: 100%;
+  min-height: 100vh;
+}
+
+.logo-area {
+  height: 64px;
+  line-height: 64px;
+  background-color: #02223F;
+  overflow: hidden;
+  padding-left: 70px;
+  img {
+    display: inline-block;
+    height: 32px;
+    vertical-align: middle;
   }
-  li {
-    float: right;
+  h1 {
+    display: inline-block;
+    vertical-align: middle;
+    color: white;
+    font-size: 20px;
+    font-family: Myriad Pro, Helvetica Neue, Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    margin-left: 12px;
   }
 }
