@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="20">
-    <el-col class="card-item" :span="6" v-for="(item,index) in list" :key="index">
-      <div class="project" @click="showDetail(item.id)">
+    <el-col class="col-item" :span="6" v-for="(item,index) in list" :key="index">
+      <div class="card project" @click="showDetail(item.id)">
         <div class="name">
           {{item.name}}
         </div>

@@ -1,4 +1,4 @@
-.card-item:nth-child(n+5) {
+.col-item:nth-child(n+5) {
   margin-top: 20px;
 }
 
@@ -10,8 +10,4 @@
   justify-content: center;
   cursor: pointer;
   padding: 10px;
-  border-radius: 4px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
-  .name {
-  }
 }

@@ -5,14 +5,14 @@
     <el-row :gutter="20">
       <el-col :md="{span:12}" :lg="{span:6}" :xl="{span:4}" class="col-item"
               v-for="(item,index) in list" :key="index">
-        <el-card :body-style="{ padding: '0px' }">
+        <div class="card">
           <div class="img-thum">
             <a :href="item.absUrl" target="_blank">
               <img v-lazy="item.thumUrl">
             </a>
           </div>
           <div class="card-item-info">
-            <span class="text-elps" :title="item.name">{{item.name}}</span>
+            <div class="text-elps" :title="item.name">{{item.name}}</div>
             <div class="options">
               <time class="time">{{item.createTime}}</time>
               <el-button class="clip-btn" type="text"
@@ -20,7 +20,7 @@
               </el-button>
             </div>
           </div>
-        </el-card>
+        </div>
       </el-col>
     </el-row>
     <el-dialog
