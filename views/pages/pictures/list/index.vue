@@ -2,8 +2,8 @@
   <div>
     <el-button type="primary" size="small" @click="uploadClick" :loading="uploading">上传</el-button>
     <input ref="fileUpload" style="display: none" type="file" @change="handleChange" accept=".jpg, .jpeg, .png, .gif">
-    <el-row :gutter="20" class="mt-20">
-      <el-col :span="6" class="col-item"
+    <el-row :gutter="20">
+      <el-col :md="{span:12}" :lg="{span:6}" :xl="{span:4}" class="col-item"
               v-for="(item,index) in list" :key="index">
         <el-card :body-style="{ padding: '0px' }">
           <div class="img-thum">
