@@ -1,5 +1,7 @@
+@import "../../../assets/style/base/var";
+
 .img-thum {
-  background-color: #EBEAEA;
+  background-color: $--bg-color;
   text-align: center;
   img {
     height: 150px;
@@ -10,25 +12,12 @@
   margin-top: 20px;
 }
 
+.cardSelected {
+  border-color: $--color-success;
+}
+
 .card-item-info {
   background-color: white;
   padding: 15px 15px 0;
   height: 80px;
-  .options {
-    margin-top: 13px;
-    line-height: 12px;
-    &:before {
-      display: table;
-      content: "";
-    }
-    &:after {
-      display: table;
-      content: "";
-      clear: both;
-    }
-    .clip-btn {
-      padding: 0;
-      float: right;
-    }
-  }
 }

@@ -1,23 +1,33 @@
 <template>
   <div>
-    <el-button type="primary" size="small" @click="uploadClick" :loading="uploading">上传</el-button>
-    <input ref="fileUpload" style="display: none" type="file" @change="handleChange" accept=".jpg, .jpeg, .png, .gif">
+    <!--func-->
+    <div class="flex-row flex-item-center">
+      <el-button type="primary" size="small" @click="uploadClick" :loading="uploading">上传</el-button>
+      <input ref="fileUpload" style="display: none" type="file" @change="handleChange" accept=".jpg, .jpeg, .png, .gif">
+      <div class="ml-20" v-if="haveSelectItemsText">
+        <span>{{haveSelectItemsText}}</span>
+        <el-button size="mini" type="text" class="clip-btn pl-10" :data-clipboard-text="batchUrls">批量复制</el-button>
+      </div>
+    </div>
+    <!--pic list-->
     <el-row :gutter="20">
       <el-col :md="{span:12}" :lg="{span:6}" :xl="{span:4}" class="col-item"
               v-for="(item,index) in list" :key="index">
-        <div class="card">
-          <div class="img-thum">
+        <div class="card" :class="{cardSelected:item.selected}">
+          <div class="img-thum flex-row flex-item-center flex-content-center">
             <a :href="item.absUrl" target="_blank">
               <img v-lazy="item.thumUrl">
             </a>
           </div>
           <div class="card-item-info">
-            <div class="text-elps" :title="item.name">{{item.name}}</div>
-            <div class="options">
-              <time class="time">{{item.createTime}}</time>
+            <div class="text-elps" :title="item.name">{{item.name}}
+            </div>
+            <div class="options flex-row flex-item-center">
+              <time class="time flex-1">{{item.createTime}}</time>
               <el-button class="clip-btn" type="text"
                          :data-clipboard-text="item.absUrl">复制
               </el-button>
+              <el-button type="text" @click="selectItem(item)">选择</el-button>
             </div>
           </div>
         </div>
@@ -50,7 +60,8 @@
         list: [],
         fileName: '',
         percent: 0,
-        uploading: false
+        uploading: false,
+        haveSelectItems: []
       }
     },
     components: {},
@@ -69,7 +80,11 @@
       async init () {
         if (this.bucketId === null) return
         let res = await Api.get(`/api/picture/${this.bucketId}`)
-        this.list = res.data || []
+        let data = res.data || []
+        data.forEach(item => {
+          item.selected = false
+        })
+        this.list = data
       },
       uploadClick () {
         this.$refs.fileUpload.click()
@@ -116,9 +131,26 @@
         setTimeout(() => {
           this.uploading = false
         }, 1350)
+      },
+      selectItem (item) {
+        if (this.haveSelectItems.includes(item)) {
+          item.selected = false
+          this.haveSelectItems.splice(this.haveSelectItems.indexOf(item), 1)
+          return
+        }
+        item.selected = true
+        this.haveSelectItems.push(item)
       }
     },
-    computed: {},
+    computed: {
+      haveSelectItemsText () {
+        let itemLength = this.haveSelectItems.length
+        return itemLength > 0 ? `已选择 ${itemLength} 个` : ''
+      },
+      batchUrls () {
+        return this.haveSelectItems.map(item => item.absUrl).join(', ')
+      }
+    },
     watch: {}
   }
 </script>
