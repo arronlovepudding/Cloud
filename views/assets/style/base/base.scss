@@ -53,40 +53,6 @@ li {
   height: 0;
 }
 
-.text-left {
-  text-align: left !important;
-}
-
-.text-center {
-  text-align: center !important;
-}
-
-.text-right {
-  text-align: right !important;
-}
-
-.text-elps {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  display: inline-block;
-  max-width: 100%;
-}
-
-.text-two-line {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  max-width: 100%;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  white-space: initial;
-}
-
-.text-paragraphed {
-  text-indent: 2rem;
-}
-
 .light {
   opacity: .7;
 }
@@ -293,14 +259,6 @@ li {
   padding: 20px !important;
 }
 
-.no-decoration {
-  text-decoration: none;
-}
-
 .tabel-cell {
   display: table-cell;
-}
-
-.text-gray {
-  color: gray;
 }
