@@ -1,0 +1,170 @@
+.login-page {
+  background-image: url("/images/login/login.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  width: 432px;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 10px;
+  background: #fff;
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(26, 26, 26, .1);
+  box-sizing: border-box;
+}
+
+.login-brand {
+  height: 145px;
+  width: inherit;
+  line-height: 145px;
+  font-size: 40px;
+  color: #0084ff;
+  font-family: Myriad Pro, Helvetica Neue, Arial, Helvetica, sans-serif;
+  font-weight: 600;
+}
+
+.login-panel {
+  margin-top: 16px;
+}
+
+.login-content {
+  padding: 0px 40px 36px;
+}
+
+input {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  padding: 0;
+  overflow: hidden;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+.login-input {
+  width: 100%;
+  height: 48px;
+  letter-spacing: 1.8px;
+  line-height: 24px;
+  border: 0;
+  box-shadow: none;
+}
+
+.password-input {
+  margin-top: 12px;
+}
+
+.account-input, .password-input {
+  border-bottom: 1px solid #ebebeb;
+  border-radius: 0;
+  position: relative;
+}
+
+.login-btn {
+  display: inline-block;
+  padding: 0 16px;
+  font-size: 14px;
+  line-height: 32px;
+  text-align: center;
+  cursor: pointer;
+  background: none;
+  border: 1px solid;
+  border-radius: 3px;
+  width: 100%;
+  margin-top: 30px;
+  height: 36px;
+  box-shadow: none;
+}
+
+.s-btn--orange {
+  background-color: #0084ff;
+  color: #ffffff;
+  border-color: #0084ff;
+}
+
+.s-btn--orange:hover {
+  border-color: #0077e6;
+  background-color: #0077e6;
+}
+
+.s-btn--orange:active, .s-btn--orange:focus {
+  border-color: #0077e6;
+  background-color: #0077e6;
+}
+
+.cooperation {
+  margin-top: 30px;
+}
+
+.title-cooperation {
+  border-top: 1px solid #ddd;
+  line-height: 1px;
+  text-align: center;
+}
+
+.title-cooperation .tit {
+  padding: 0 20px;
+  background: #fff;
+  color: #999999;
+}
+
+.cooperation-content {
+  margin: 20px 0 0;
+}
+
+.cooperation a {
+  display: inline-block;
+  margin: 10px 20px;
+}
+
+.cooperation i {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  user-select: none;
+  background-size: contain;
+}
+
+.icon-weixin {
+  background-image: url("/images/login/weixin.png");
+}
+
+.icon-weibo {
+  background-image: url("/images/login/weibo.png");
+}
+
+.icon-qq {
+  background-image: url("/images/login/qq.png");
+}
+
+.input-errorMask {
+  position: absolute;
+  height: 90%;
+  padding: 12px 0 0 0;
+  margin-top: -47px;
+  font-size: 14px;
+  color: #f1403c;
+  text-align: left;
+  cursor: text;
+  background: #fff;
+  opacity: 1;
+  box-sizing: border-box;
+  transition: opacity .25s ease;
+}
