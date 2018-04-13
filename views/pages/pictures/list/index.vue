@@ -83,7 +83,7 @@
         if (this.bucketId === null) return
         let fileAccept = await Api.get(`/api/picture/${this.bucketId}/fileAccept`)
         this.fileAccept = fileAccept.data.accept
-        this.showImg = fileAccept.data.showImg
+        this.showImg = fileAccept.data.storageType === 'img'
         let res = await Api.get(`/api/picture/${this.bucketId}`)
         let data = res.data || []
         data.forEach(item => {
