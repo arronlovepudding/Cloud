@@ -10,7 +10,7 @@ exports.list = async function (ctx) {
       id: item._id,
       name: item.name,
       path: item.path,
-      storageType: item.storageType
+      storageName: item.storageName
     }
   })
 }
@@ -21,11 +21,30 @@ exports.detail = async function (ctx) {
   ctx.body = result.map(item => item.apiData)
 }
 
-exports.token = async function (ctx) {
+exports.fileAccept = async function (ctx) {
   let bucketId = ctx.params.bucketId
   let bucket = await PictureBucket.findById(bucketId) || {}
+  ctx.body = {
+    accept: bucket.accept,
+    storageType: bucket.storageType
+  }
+}
+
+exports.token = async function (ctx) {
+  let bucketId = ctx.params.bucketId
+  let fileName = ctx.params.fileName
+  let bucket = await PictureBucket.findById(bucketId) || {}
   let keyPath = bucket.path || ''
-  ctx.body = QiniuTools.uptoken(keyPath)
+  let key = null
+  if (!bucket.needHashName) key = `${keyPath}${fileName}`
+  let uptokenCon = {
+    keyPath,
+    key
+  }
+  ctx.body = {
+    token: QiniuTools.uptoken(uptokenCon),
+    key
+  }
 }
 
 exports.create = async function (ctx) {
@@ -61,7 +80,7 @@ exports.bucketCreate = async function (ctx) {
   let pictureBucket = new PictureBucket()
   pictureBucket.name = params.name
   pictureBucket.path = params.path
-  pictureBucket.fileType = params.fileType
+  pictureBucket.storageType = params.storageType
   await pictureBucket.save()
   ctx.status = 204
 }

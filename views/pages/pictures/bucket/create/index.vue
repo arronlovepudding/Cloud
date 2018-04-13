@@ -10,8 +10,8 @@
                     :disabled="formAttrDisabled"></el-input>
         </el-form-item>
         <el-form-item label="存储类型">
-          <el-radio-group v-model="form.fileType">
-            <el-radio label="img">图库</el-radio>
+          <el-radio-group v-model="form.storageType">
+            <el-radio label="img">Images</el-radio>
             <el-radio label="js_css">JS、CSS</el-radio>
           </el-radio-group>
         </el-form-item>
@@ -35,7 +35,7 @@
         form: {
           name: '',
           path: '',
-          fileType: ''
+          storageType: ''
         },
         formAttrDisabled: false,
         buttonName: '立即创建',
@@ -54,7 +54,7 @@
         this.$router.back()
       },
       check () {
-        if (this.form.name === '' || this.form.path === '' || this.form.fileType === '') {
+        if (this.form.name === '' || this.form.path === '' || this.form.storageType === '') {
           this.$message.warning('数据不可为空')
           return false
         }
