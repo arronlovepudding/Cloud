@@ -9,6 +9,12 @@
           <el-input v-model="form.path" placeholder="格式: path1/path2/"
                     :disabled="formAttrDisabled"></el-input>
         </el-form-item>
+        <el-form-item label="存储类型">
+          <el-radio-group v-model="form.fileType">
+            <el-radio label="img">图库</el-radio>
+            <el-radio label="js_css">JS、CSS</el-radio>
+          </el-radio-group>
+        </el-form-item>
         <el-form-item>
           <el-button @click="goBack">取消</el-button>
           <el-button type="primary" @click="onSubmit" :loading="loading">{{buttonName}}</el-button>
@@ -28,7 +34,8 @@
       return {
         form: {
           name: '',
-          path: ''
+          path: '',
+          fileType: ''
         },
         formAttrDisabled: false,
         buttonName: '立即创建',
@@ -46,8 +53,15 @@
       goBack () {
         this.$router.back()
       },
+      check () {
+        if (this.form.name === '' || this.form.path === '' || this.form.fileType === '') {
+          this.$message.warning('数据不可为空')
+          return false
+        }
+        return true
+      },
       async onSubmit () {
-        if (this.form.name === '' || this.form.path === '') return this.$message.warning('数据不可为空')
+        if (!this.check()) return
         if (/^([0-9a-zA-z]+\/?)+\/$/.test(this.form.path) === false) return this.$message.warning('路径错误，标准格式: path1/path2/')
         this.loading = true
         let res = await Api.post(`/api/picture/bucket/create`, this.form)

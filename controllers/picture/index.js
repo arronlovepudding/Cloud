@@ -9,7 +9,8 @@ exports.list = async function (ctx) {
     return {
       id: item._id,
       name: item.name,
-      path: item.path
+      path: item.path,
+      storageType: item.storageType
     }
   })
 }
@@ -60,6 +61,7 @@ exports.bucketCreate = async function (ctx) {
   let pictureBucket = new PictureBucket()
   pictureBucket.name = params.name
   pictureBucket.path = params.path
+  pictureBucket.fileType = params.fileType
   await pictureBucket.save()
   ctx.status = 204
 }

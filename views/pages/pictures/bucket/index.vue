@@ -8,6 +8,9 @@
         <div class="path">
           <span class="text-gray">仓库路径：{{item.path}}</span>
         </div>
+        <div>
+          <span class="text-gray">存储类型：{{item.storageType}}</span>
+        </div>
       </div>
     </el-col>
   </el-row>
