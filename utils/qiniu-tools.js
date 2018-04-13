@@ -8,7 +8,7 @@ const bucketName = config.qiniu.bucket
 exports.uptoken = function ({keyPath, key = null}) {
   let saveKeyPolicy = key ? '$(fname)' : '$(etag)$(ext)'
   let saveKey = `${keyPath}${saveKeyPolicy}`
-  let scope = bucketName + key ? `:${key}` : ''
+  let scope = key ? `${bucketName}:${key}` : bucketName
   let policy = {
     scope,
     saveKey
