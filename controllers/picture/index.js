@@ -26,7 +26,7 @@ exports.fileAccept = async function (ctx) {
   let bucket = await PictureBucket.findById(bucketId) || {}
   ctx.body = {
     accept: bucket.accept,
-    storageType: bucket.storageType
+    showImg: bucket.needHashName
   }
 }
 

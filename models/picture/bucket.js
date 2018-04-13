@@ -13,23 +13,23 @@ const schema = new Schema({
 })
 
 schema.virtual('storageName').get(function () {
-  const defaultType = '图库'
+  const defaultType = 'Hash'
   return {
-    'js_css': 'JS、CSS',
-    'img': '图库'
+    'fname': 'FileName',
+    'etag': 'Hash'
   }[this.storageType] || defaultType
 })
 
 schema.virtual('accept').get(function () {
   const defaultVal = '.jpg, .jpeg, .png, .gif'
   return {
-    'js_css': '.js, .css',
-    'img': defaultVal
+    'fname': '.js, .css',
+    'etag': defaultVal
   }[this.storageType] || defaultVal
 })
 
 schema.virtual('needHashName').get(function () {
-  return this.storageType === 'img'
+  return this.storageType === 'etag'
 })
 
 schema.index({create_at: 1})

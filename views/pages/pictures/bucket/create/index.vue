@@ -11,8 +11,8 @@
         </el-form-item>
         <el-form-item label="存储类型">
           <el-radio-group v-model="form.storageType">
-            <el-radio label="img">Images</el-radio>
-            <el-radio label="js_css">JS、CSS</el-radio>
+            <el-radio label="etag">Hash</el-radio>
+            <el-radio label="fname">FileName</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item>
