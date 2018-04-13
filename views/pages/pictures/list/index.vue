@@ -3,7 +3,7 @@
     <!--func-->
     <div class="flex-row flex-item-center">
       <el-button type="primary" size="small" @click="uploadClick" :loading="uploading">上传</el-button>
-      <input ref="fileUpload" style="display: none" type="file" @change="handleChange" accept=".jpg, .jpeg, .png, .gif">
+      <input ref="fileUpload" style="display: none" type="file" @change="handleChange" :accept="fileAccept">
       <div class="ml-20" v-if="haveSelectItemsText">
         <span>{{haveSelectItemsText}}</span>
         <el-button size="mini" type="text" class="clip-btn pl-10" :data-clipboard-text="batchUrls">批量复制</el-button>
@@ -14,7 +14,7 @@
       <el-col :md="{span:12}" :lg="{span:6}" :xl="{span:4}" class="col-item"
               v-for="(item,index) in list" :key="index">
         <div class="card" :class="{cardSelected:item.selected}">
-          <div class="img-thum flex-row flex-item-center flex-content-center">
+          <div class="img-thum flex-row flex-item-center flex-content-center" v-if="showImg">
             <a :href="item.absUrl" target="_blank">
               <img v-lazy="item.thumUrl">
             </a>
@@ -61,7 +61,9 @@
         fileName: '',
         percent: 0,
         uploading: false,
-        haveSelectItems: []
+        haveSelectItems: [],
+        fileAccept: '.jpg, .jpeg, .png, .gif',
+        showImg: false
       }
     },
     components: {},
@@ -79,6 +81,9 @@
     methods: {
       async init () {
         if (this.bucketId === null) return
+        let fileAccept = await Api.get(`/api/picture/${this.bucketId}/fileAccept`)
+        this.fileAccept = fileAccept.data.accept
+        this.showImg = fileAccept.data.showImg
         let res = await Api.get(`/api/picture/${this.bucketId}`)
         let data = res.data || []
         data.forEach(item => {
@@ -93,9 +98,11 @@
         const files = event.target.files
         if (!files) return
         let file = files[0]
+        this.$refs.fileUpload.value = null
         this.fileName = file.name
-        let res = await Api.get(`/api/picture/${this.bucketId}/token`)
-        let token = res.data
+        let res = await Api.get(`/api/picture/${this.bucketId}/token/${this.fileName}`)
+        let token = res.data.token
+        let key = res.data.key
         let pictureObj = {
           name: file.name,
           size: file.size,
@@ -103,7 +110,7 @@
         }
         this.uploading = true
         this.percent = 0
-        let observable = qiniu.upload(file, null, token)
+        let observable = qiniu.upload(file, key, token)
         observable.subscribe(next => {
           console.log(next)
           let percent = next.total.percent
