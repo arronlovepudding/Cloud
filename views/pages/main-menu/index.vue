@@ -19,6 +19,10 @@
       <el-menu-item index="3-1">浏览</el-menu-item>
       <el-menu-item index="3-2">新建</el-menu-item>
     </el-submenu>
+    <el-submenu index="4">
+      <template slot="title">脚手架</template>
+      <el-menu-item index="4-1">使用</el-menu-item>
+    </el-submenu>
     <el-submenu index="2">
       <template slot="title">用户管理</template>
       <el-menu-item index="2-1">退出</el-menu-item>
@@ -51,7 +55,8 @@
           '1-1': '/',
           '2-1': '/login/out',
           '3-1': '/picture',
-          '3-2': '/picture/bucket/create'
+          '3-2': '/picture/bucket/create',
+          '4-1': '/scaffold'
         }[key]
         this.$router.push(path)
       }

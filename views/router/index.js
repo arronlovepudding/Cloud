@@ -11,6 +11,8 @@ import PictureBucket from 'pages/pictures/bucket'
 import PictureBucketMaintain from 'pages/pictures/bucket/create'
 import PictureList from 'pages/pictures/list'
 
+import Scaffold from 'pages/scaffold'
+
 Vue.use(Router)
 
 export function createRouter () {
@@ -52,6 +54,9 @@ export function createRouter () {
       }, {
         path: '/picture/:bucketId',
         component: PictureList
+      }, {
+        path: '/scaffold',
+        component: Scaffold
       }]
     }]
   })
