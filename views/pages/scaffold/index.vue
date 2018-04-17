@@ -3,40 +3,53 @@
     <!--left-->
     <el-col :span="12">
       <el-form label-width="100px">
-        <el-form-item label="模型模板">
-          <el-input v-model="modelStr"></el-input>
+        <el-form-item label="模型属性">
+          <el-input type="textarea"
+                    :autosize="{ minRows: 2, maxRows: 4}"
+                    placeholder="模型属性字符串，使用英文逗号分隔，例如：name,age"
+                    v-model="modelStr"></el-input>
         </el-form-item>
-        <el-form-item>
-          <el-button @click="initTemplate">确定</el-button>
-        </el-form-item>
-        <el-row>
-          <el-button @click="build">生成</el-button>
-          <el-button @click="createModel">生成Model</el-button>
-          <el-button @click="createTemplate">生成Template</el-button>
+      </el-form>
+      <!--功能区-->
+      <el-row class="tools flex-row flex-item-center">
+        <el-col :span="24">
+          <el-button @click="initTemplate" size="mini"><i class="el-icon-edit"></i> 生成属性</el-button>
+          <template v-if="haveModels">
+            <el-button @click="addModels" size="mini"><i class="el-icon-plus"></i> 追加属性</el-button>
+            <el-button @click="build" size="mini"><i class="el-icon-document"></i> 生成代码</el-button>
+          </template>
+        </el-col>
+      </el-row>
+      <!--动态属性-->
+      <el-form class="mt-20" label-width="60px">
+        <el-row class="attr-item flex-row"
+                v-for="(item,index) in ins.models"
+                :key="index">
+          <!-- col-1 -->
+          <el-col :span="11">
+            <el-form-item label="字段名">
+              <el-input v-model="item.name"></el-input>
+            </el-form-item>
+            <el-form-item label="类型">
+              <el-select class="fill-parent" v-model="item.type">
+                <el-option v-for="item in fileTypes"
+                           :key="item.label"
+                           :label="item.label"
+                           :value="item.value"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <!-- col-2 -->
+          <el-col :span="11">
+            <el-form-item label="中文名">
+              <el-input v-model="item.zhName"></el-input>
+            </el-form-item>
+          </el-col>
+          <!-- col-3 -->
+          <el-col :span="2" class="operate flex-col flex-item-center flex-content-center">
+            <i class="el-icon-remove-outline" @click="removeItem(index)"></i>
+          </el-col>
         </el-row>
-        <template v-for="item in models">
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="字段名">
-                <el-input v-model="item.name"></el-input>
-              </el-form-item>
-              <el-form-item label="类型">
-                <el-select class="fill-parent" v-model="item.type">
-                  <el-option v-for="item in fileTypes"
-                             :key="item.label"
-                             :label="item.label"
-                             :value="item.value"></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="中文名">
-                <el-input v-model="item.zhName"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <hr>
-        </template>
       </el-form>
     </el-col>
     <!--right-->
@@ -49,42 +62,18 @@
   @import 'index';
 </style>
 <script>
-  import jsBeautify from 'js-beautify'
+  import CodeEditor from 'views/utils/code-editor'
+  import CodeBeautify from 'views/utils/code-beautify'
+  import FormTemplate from 'views/models/scaffold/template'
+  import Scaffold from 'views/models/scaffold'
 
   export default {
     data () {
-      const formItemEnum = {
-        text: '1',
-        img: '2',
-        currency: '3'
-      }
+      let ins = new Scaffold()
       return {
-        formItemEnum,
+        ins,
         modelStr: '',
-        models: [],
-        fileTypes: [{
-          label: '文本',
-          value: formItemEnum.text
-        }, {
-          label: '图片',
-          value: formItemEnum.img
-        }, {
-          label: '金额',
-          value: formItemEnum.currency
-        }],
-        defaultFileType: formItemEnum.text,
-        formItemTemplate: {
-          [formItemEnum.text]: {
-            tag: 'el-input'
-          },
-          [formItemEnum.img]: {
-            tag: 's-upload'
-          },
-          [formItemEnum.currency]: {
-            tag: 'el-input',
-            attrs: ['v-decimal-max-value']
-          }
-        }
+        fileTypes: FormTemplate.fileTypes
       }
     },
     components: {},
@@ -97,85 +86,46 @@
     },
     methods: {
       initEditor () {
-        let editor = window.ace.edit(this.$refs.codeEdit)
-        editor.$blockScrolling = Infinity
-        editor.session.setMode('ace/mode/html')
-        editor.setTheme('ace/theme/monokai')
-        editor.getSession().on('change', () => {
-          // this.form.content = editor.getValue()
-        })
-        this.editor = editor
-      },
-      createModel () {
-        let model = this.models.map(item => {
-          return `${item.name}:'', // ${item.zhName}`
-        })
-        let formData =
-          `{
-  ${model.join('\n')}
-}`
-        return formData
-      },
-      createTemplate () {
-        // 创建标签
-        const createInput = (item) => {
-          const varName = 'formData'
-          const tag = this.formItemTemplate[item.type].tag
-          const attrs = this.formItemTemplate[item.type].attrs || ''
-          return `<${tag} ${attrs} v-model="${varName}.${item.name}"></${tag}>`
-        }
-        // 处理model
-        let model = this.models.map(item => {
-          return `<el-form-item label="${item.zhName}">${createInput(item)}</el-form-item>`
-        })
-        let template = `<el-form>${model.join('\n')}</el-form>`
-        return template
+        this.editor = CodeEditor.init(this.$refs.codeEdit, {mode: 'html'})
       },
       initTemplate () {
-        let modelNames = this.modelStr.split(',')
-        this.models = modelNames.map(item => {
-          return {
-            name: item,
-            zhName: '',
-            type: this.defaultFileType
-          }
-        })
+        const createModels = () => {
+          this.ins.createModels(this.modelStr.split(','))
+        }
+        if (this.haveModels) {
+          this.$confirm('已有模板，确定重新生成？', '提示', {
+            type: 'warning',
+            showClose: false
+          }).then(() => {
+            createModels()
+          })
+          return
+        }
+        createModels()
       },
       build () {
-        /* eslint-disable */
-        let template = `${this.createTemplate()}
-<script>
-${this.createModel()}
-<\/script>
-`
-        /* eslint-enable */
-        let templateBeautify = jsBeautify.html(template, {
-          'indent_size': 4,
-          'indent_char': ' ',
-          'indent_with_tabs': false,
-          'eol': '\n',
-          'end_with_newline': false,
-          'indent_level': 0,
-          'preserve_newlines': true,
-          'max_preserve_newlines': 10,
-          'space_in_paren': false,
-          'space_in_empty_paren': false,
-          'jslint_happy': false,
-          'space_after_anon_function': false,
-          'brace_style': 'collapse',
-          'unindent_chained_methods': false,
-          'break_chained_methods': false,
-          'keep_array_indentation': false,
-          'unescape_strings': false,
-          'wrap_line_length': 0,
-          'e4x': true,
-          'comma_first': false,
-          'operator_position': 'before-newline'
-        })
+        let templateBeautify = CodeBeautify.html(this.ins.build())
         this.editor.setValue(templateBeautify)
+      },
+      removeItem (index) {
+        this.$confirm('确定删除, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          showClose: false,
+          type: 'warning'
+        }).then(() => {
+          this.ins.removeItem(index)
+        })
+      },
+      addModels () {
+        this.ins.addItem()
       }
     },
-    computed: {},
+    computed: {
+      haveModels () {
+        return this.ins.models.length > 0
+      }
+    },
     watch: {}
   }
 </script>

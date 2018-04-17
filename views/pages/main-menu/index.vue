@@ -21,7 +21,7 @@
     </el-submenu>
     <el-submenu index="4">
       <template slot="title">脚手架</template>
-      <el-menu-item index="4-1">使用</el-menu-item>
+      <el-menu-item index="4-1">表单生成</el-menu-item>
     </el-submenu>
     <el-submenu index="2">
       <template slot="title">用户管理</template>
