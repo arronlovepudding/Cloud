@@ -43,7 +43,13 @@ class Scaffold {
     /* eslint-disable */
     let template = `${this.createTemplate()}
 <script>
-${this.createModel()}
+export default {
+  data () {
+    return{
+      formData:${this.createModel()}  
+    }
+  }
+}
 <\/script>
 `
     /* eslint-enable */
