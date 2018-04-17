@@ -28,7 +28,8 @@ module.exports = {
       'pages': resolve('../views/pages'),
       'components': resolve('../views/components'),
       'config': resolve('../views/config.json'),
-      'src': resolve('../views')
+      'src': resolve('../views'),
+      'views': resolve('../views')
     }
   },
   module: {
